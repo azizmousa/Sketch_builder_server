@@ -8,11 +8,12 @@ class SystemConfiguration
 private:
     SystemConfiguration();
     ~SystemConfiguration();
-    
+
     static std::string SKETCH_BUILDER_UI_PATH;
     static std::string SKETCH_BUILDER_COMPILER_PATH;
     static std::string SKETCH_BUILDER_EQUALIZER_PAHT;
     static std::string SKETCH_BUILDER_GENERATOR_PATH;
+    
 public:
     
     static void setSystemUIPath(const std::string path);

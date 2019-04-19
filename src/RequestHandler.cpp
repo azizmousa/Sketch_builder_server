@@ -8,7 +8,6 @@
 #include "server/Command.h"
 
 const int  start = 1;
-#define start_str "start"
 
 RequestHandler::RequestHandler(){
     this->commands.insert({"start", start});
