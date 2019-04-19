@@ -26,6 +26,5 @@ public:
     void start();
     void disconnect();
     void sendMessageToClient(std::string message);
-
 };
 #endif
