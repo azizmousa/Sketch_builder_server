@@ -5,7 +5,7 @@
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <stdlib.h>
+
 
 class Server{
 private:
@@ -22,7 +22,8 @@ public:
 
     void connect();
     void start();
-    void close();
+    void disconnect();
+    void sendMessageToClient(char* message);
 
 };
 #endif
