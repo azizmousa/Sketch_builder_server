@@ -5,11 +5,16 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <stdlib.h>
+#include <thread>
 
 #include "server/Server.h"
 #include "server/ServerException.h"
+#include "server/RequestHandler.h"
+#include "server/Command.h"
 
-Server::Server(char* serverPort){
+
+
+Server::Server(std::string serverPort){
     this->serverPort = serverPort;
 }
 
@@ -25,7 +30,7 @@ void Server::connect(){
 
     bzero((char *) &serv_addr, sizeof(serv_addr));
 
-    this->portno = atoi(this->serverPort);
+    this->portno = atoi(this->serverPort.c_str());
     this->serv_addr.sin_family = AF_INET;
     this->serv_addr.sin_addr.s_addr = INADDR_ANY;
     this->serv_addr.sin_port = htons(portno);
@@ -48,10 +53,12 @@ void Server::start(){
         this->n = read(newsockfd,buffer,255);
         if (n < 0) 
             throw ServerException("ERROR reading from socket");
+        handlRequest(std::string(buffer));
         printf("Here is the message: %s\n",buffer);
         this->sendMessageToClient("I got your message");
         if (this->n < 0) 
             throw ServerException("ERROR writing to socket");
+        
     }
 }
 
@@ -60,6 +67,16 @@ void Server::disconnect(){
     close(this->sockfd);
 }
 
-void Server::sendMessageToClient(char* message){
-    this->n = write(newsockfd, message,18);
+void Server::sendMessageToClient(std::string message){
+    this->n = write(newsockfd, message.c_str(),18);
+}
+
+void Server::handlRequest(std::string request){
+    RequestHandler *requestHandler = new RequestHandler();
+    requestHandler->setRequest(request);
+    Command *command = requestHandler->getCommand();
+    command->doCommand();
+    
+    delete command;
+    delete requestHandler;
 }

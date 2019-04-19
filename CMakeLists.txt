@@ -6,7 +6,7 @@ file(GLOB SRC_ "src/*.cpp")
 
 set(EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin/server")
 
-set(CMAKE_CXX_FLAGES "-g -O2 -Wall")
+set(CMAKE_CXX_FLAGS "-Wall -O2 -g -pthread")
 
 add_executable(sketch_builder_server ${SRC_})
 

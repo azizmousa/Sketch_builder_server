@@ -40,8 +40,9 @@ void RequestHandler::split(){
         do{
             nextSpace = this->request.find(' ', currentPos+1);
             sub = this->request.substr(currentPos+1, nextSpace - currentPos-1);
-            // std::cerr << sub << std::endl;
-            this->params.push_back(sub);
+            std::cerr<<"(" << sub <<")"<< std::endl;
+            if(sub != "" || sub != " ")
+                this->params.push_back(sub);
             currentPos = nextSpace;
         }while (nextSpace!=-1);
         // sub = this->request.substr(currentPos, nextSpace - currentPos);
