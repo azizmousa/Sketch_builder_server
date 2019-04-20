@@ -7,16 +7,21 @@
 #include "server/SystemConfiguration.h"
 #include "server/StartSystemCommand.h"
 
-void handlCommand(std::thread * th){
+StartSystemCommand::StartSystemCommand(){
+    this->commandThread = new std::thread;
+}
+
+StartSystemCommand::~StartSystemCommand(){
+    // delete this->commandThread;
+}
+
+void handlCommand(){
     std::string startCommand = "java -jar " + SystemConfiguration::getSystemUIPath();
     int res = system(startCommand.c_str());
     std::cout << "runing " << SystemConfiguration::getSystemUIPath()<< " result = "<<res<< std::endl;
-    delete th;
 }
 
 void StartSystemCommand::doCommand(){
-    // system("./system");
-    std::thread *commandThread = new std::thread;
-    *commandThread = std::thread(handlCommand, commandThread);
-    
+    *commandThread = std::thread(handlCommand);
+    commandThread->detach();
 }
