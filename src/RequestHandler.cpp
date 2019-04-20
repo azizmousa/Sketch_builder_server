@@ -10,17 +10,21 @@
 #include "server/ExitCommand.h"
 #include "server/CompileCommand.h"
 #include "server/EqualizeCommand.h"
+#include "server/GeneratorCommand.h"
 
 const int EXIT = 1;
 const int  START = 2;
 const int COMPILE = 3;
 const int EQUALIZE = 4;
+const int GENERATOR = 5;
+
 
 RequestHandler::RequestHandler(){
     this->commands.insert({"exit", EXIT});
     this->commands.insert({"start", START});
     this->commands.insert({"compile", COMPILE});
     this->commands.insert({"equalize", EQUALIZE});
+    this->commands.insert({"generate", GENERATOR});
     
 }
 RequestHandler::~RequestHandler(){
@@ -47,7 +51,9 @@ void RequestHandler::mapRequest(){
     case EQUALIZE:
         this->requestedCommand = new EqualizeCommand(this->params);
         break;
-    
+    case GENERATOR:
+        this->requestedCommand = new GeneratorCommand(this->params);
+        break;
     default:
         std::cerr << "undefined request."<<std::endl;
         this->requestedCommand = NULL;
