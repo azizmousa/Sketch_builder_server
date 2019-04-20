@@ -5,6 +5,7 @@
 ExitCommand::ExitCommand(){}
 ExitCommand::~ExitCommand(){}
 
-void ExitCommand::doCommand(){
+int ExitCommand::doCommand(){
     Server::disconnect();
+    return 0;
 }

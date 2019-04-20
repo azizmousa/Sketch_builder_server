@@ -10,7 +10,7 @@ private:
 public:
     StartSystemCommand();
     ~StartSystemCommand();
-    void doCommand();
+    int doCommand();
 };
 
 #endif

@@ -21,7 +21,8 @@ void handlCommand(){
     std::cout << "runing " << SystemConfiguration::getSystemUIPath()<< " result = "<<res<< std::endl;
 }
 
-void StartSystemCommand::doCommand(){
+int StartSystemCommand::doCommand(){
     *commandThread = std::thread(handlCommand);
     commandThread->detach();
+    return 0;
 }

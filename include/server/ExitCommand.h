@@ -9,7 +9,7 @@ private:
 public:
     ExitCommand();
     ~ExitCommand();
-    void doCommand();
+    int doCommand();
 };
 
 
