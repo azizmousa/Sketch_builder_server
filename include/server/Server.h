@@ -10,21 +10,24 @@
 
 class Server{
 private:
-    std::string serverPort;
-    int sockfd, newsockfd, portno;
-    socklen_t clilen;
-    char buffer[256];
-    struct sockaddr_in serv_addr, cli_addr;
-    int n;
-
-    void handlRequest(std::string request);
-public:
-    Server(std::string serverPort);
+    Server();
     ~Server();
+    static std::string serverPort;
+    static int sockfd, newsockfd, portno;
+    static socklen_t clilen;
+    static char buffer[256];
+    static struct sockaddr_in serv_addr, cli_addr;
+    static int n;
+    static bool listening;
 
-    void connect();
-    void start();
-    void disconnect();
-    void sendMessageToClient(std::string message);
+    static void handlRequest(std::string request);
+public:
+    
+    static void setPort(std::string serverPort);
+    static std::string getPort();
+    static void connect();
+    static void start();
+    static void disconnect();
+    static void sendMessageToClient(std::string message);
 };
 #endif

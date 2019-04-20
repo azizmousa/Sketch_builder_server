@@ -5,70 +5,79 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <stdlib.h>
-#include <thread>
+#include <iostream>
 
 #include "server/Server.h"
 #include "server/ServerException.h"
 #include "server/RequestHandler.h"
 #include "server/Command.h"
 
+std::string Server::serverPort;
+int Server::sockfd, Server::newsockfd, Server::portno;
+socklen_t Server::clilen;
+char Server::buffer[256];
+struct sockaddr_in Server::serv_addr, Server::cli_addr;
+int Server::n;
+bool Server::listening = true;
 
-
-Server::Server(std::string serverPort){
-    this->serverPort = serverPort;
+void Server::setPort(std::string serverPort){
+    Server::serverPort = serverPort;
 }
-
-Server::~Server(){
-    this->disconnect();
+std::string Server::getPort(){
+    return Server::serverPort;
 }
-
 
 void Server::connect(){
-    this->sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (this->sockfd < 0) 
+    Server::sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (Server::sockfd < 0) 
        throw ServerException("ERROR opening socket");
 
     bzero((char *) &serv_addr, sizeof(serv_addr));
 
-    this->portno = atoi(this->serverPort.c_str());
-    this->serv_addr.sin_family = AF_INET;
-    this->serv_addr.sin_addr.s_addr = INADDR_ANY;
-    this->serv_addr.sin_port = htons(portno);
+    Server::portno = atoi(Server::serverPort.c_str());
+    Server::serv_addr.sin_family = AF_INET;
+    Server::serv_addr.sin_addr.s_addr = INADDR_ANY;
+    Server::serv_addr.sin_port = htons(portno);
 
-    if (bind(sockfd, (struct sockaddr *) &serv_addr,
-             sizeof(serv_addr)) < 0) 
-             throw ServerException("ERROR on binding");
+    while (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
+        std::cerr<<("ERROR on binding: Port Is used ...")<<std::endl;
+        sleep(3);
+    }
+    std::cout << "System is ready:" <<std::endl;    
 }
 
 void Server::start(){
-    while(1){
-        listen(sockfd,5);
+    listen(sockfd, 10);
+    while(listening){
         clilen = sizeof(cli_addr);
-        newsockfd = accept(sockfd, 
-                    (struct sockaddr *) &cli_addr, 
-                    &clilen);
+        newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
         if (newsockfd < 0) 
             throw ServerException("ERROR on accept");
-        bzero(buffer,256);
-        this->n = read(newsockfd,buffer,255);
+
+        // bzero(buffer,256);
+        Server::n = read(newsockfd,buffer,255);
+
         if (n < 0) 
             throw ServerException("ERROR reading from socket");
-        handlRequest(std::string(buffer));
+        handlRequest(std::string(buffer).substr(0, n-1));
         printf("Here is the message: %s\n",buffer);
-        this->sendMessageToClient("I got your message");
-        if (this->n < 0) 
+        Server::sendMessageToClient("Command recieved");
+        if (Server::n < 0) 
             throw ServerException("ERROR writing to socket");
-        
+        close(Server::newsockfd);
     }
+    
+    shutdown(Server::newsockfd, SHUT_RDWR);
+    close(Server::sockfd);
+    std::cout << "Socket is closed!" << std::endl;
 }
 
 void Server::disconnect(){
-    close(this->newsockfd);
-    close(this->sockfd);
+    Server::listening = false;
 }
 
 void Server::sendMessageToClient(std::string message){
-    this->n = write(newsockfd, message.c_str(),18);
+    Server::n = write(newsockfd, message.c_str(),18);
 }
 
 void Server::handlRequest(std::string request){
