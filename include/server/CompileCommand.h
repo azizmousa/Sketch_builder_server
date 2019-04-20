@@ -12,7 +12,7 @@ private:
 public:
     CompileCommand(std::vector<std::string> params);
     ~CompileCommand();
-    void doCommand();
+    int doCommand();
 };
 
 #endif

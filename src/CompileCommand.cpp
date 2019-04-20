@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <stdlib.h>
+#include <iostream>
 
 #include "server/CompileCommand.h"
 
@@ -11,9 +12,13 @@ CompileCommand::CompileCommand(std::vector<std::string> params){
 }
 CompileCommand::~CompileCommand(){}
 
-void CompileCommand::doCommand(){
+int CompileCommand::doCommand(){
     std::string command = "./../compiler/compiler";
-    for(size_t i =0; i< this->params.size(); ++i)
+    for(size_t i =0; i< this->params.size(); ++i){
         command += " " + this->params[i];
-    system(command.c_str());
+    }
+    std::cout << command << std::endl;
+    // 
+    int systemRes = system(command.c_str());;
+    return systemRes;
 }
