@@ -10,9 +10,10 @@ int main(){
     SystemConfiguration::setSystemEqualizerPath("../equalizer/equalizer");
     SystemConfiguration::setSystemCodeGeneratorPath("../UI/ui.jar");
 
-    Server *server = new Server("1996");
-    server->connect();
-    server->start();
+    Server::setPort("1996");
+    Server::connect();
+    Server::start();
+
 
     return 0;
 }
