@@ -1,15 +1,20 @@
 
 #include <string>
 #include <iostream>
-
+#include <stdlib.h>
 #include "server/RequestHandler.h"
 #include "server/ServerException.h"
 #include "server/StartSystemCommand.h"
 #include "server/Command.h"
+#include "server/Server.h"
+#include "server/ExitCommand.h"
+
 
 const int  start = 1;
+const int ext = 0;
 
 RequestHandler::RequestHandler(){
+    this->commands.insert({"exit", ext});
     this->commands.insert({"start", start});
     
 }
@@ -22,6 +27,11 @@ void RequestHandler::mapRequest(){
     switch (this->commands[command]){
     case start:
         this->requestedCommand = new StartSystemCommand();
+        break;
+    case ext:
+        std::cout << "port : " << Server::getPort() << std::endl;
+        this->requestedCommand = new ExitCommand();
+        // exit(0);
         break;
     
     default:
@@ -45,8 +55,6 @@ void RequestHandler::split(){
                 this->params.push_back(sub);
             currentPos = nextSpace;
         }while (nextSpace!=-1);
-        // sub = this->request.substr(currentPos, nextSpace - currentPos);
-        // this->params.push_back(sub);
     }
 }
 
