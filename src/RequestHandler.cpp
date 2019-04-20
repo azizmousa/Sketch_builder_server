@@ -2,6 +2,8 @@
 #include <string>
 #include <iostream>
 #include <stdlib.h>
+#include <sstream>
+
 #include "server/RequestHandler.h"
 #include "server/ServerException.h"
 #include "server/StartSystemCommand.h"
@@ -62,25 +64,23 @@ void RequestHandler::mapRequest(){
 }
 
 void RequestHandler::split(){
-    if(this->request == "")
-        throw ServerException("RequestHandler:: has no request to handle");
-    else{
-        int currentPos = -1;
+    if(this->request == ""){
+        std::cerr << ("RequestHandler:: has no request to handle") << std::endl;
+        this->params.push_back("none");
+    }else{
         std::string sub;
-        int nextSpace;
-        do{
-            nextSpace = this->request.find(' ', currentPos+1);
-            sub = this->request.substr(currentPos+1, nextSpace - currentPos-1);
+        std::stringstream ss(this->request);
+        while(!ss.eof()){
+            ss >> sub;
+            this->params.push_back(sub);
             std::cerr<<"(" << sub <<")"<< std::endl;
-            if(sub != "" || sub != " ")
-                this->params.push_back(sub);
-            currentPos = nextSpace;
-        }while (nextSpace!=-1);
+        }
     }
 }
 
 void RequestHandler::setRequest(std::string request){
     this->request = request;
+    std::cerr << "req:: " <<  this->request << std::endl;
     this->split();
     this->mapRequest();
 }

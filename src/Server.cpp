@@ -57,12 +57,15 @@ void Server::start(){
             throw ServerException("ERROR on accept");
 
         // bzero(buffer,256);
-        Server::n = read(newsockfd,buffer,255);
+        Server::n = recv(newsockfd,buffer,255, 0);
 
         if (n < 0) 
             throw ServerException("ERROR reading from socket");
-        int response = handlRequest(std::string(buffer).substr(0, n-1));
         printf("Recieved Command: %s\n",buffer);
+
+        //there was n- 1 here
+        int response = handlRequest(std::string(buffer));
+        
         std::string sres = "200";
         if(response > 0)
             sres = "400";
@@ -84,7 +87,7 @@ void Server::disconnect(){
 }
 
 void Server::sendMessageToClient(std::string message){
-    Server::n = write(newsockfd, message.c_str(),18);
+    Server::n = send(newsockfd, message.c_str(),18, 0);
 }
 
 int Server::handlRequest(std::string request){
