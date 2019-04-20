@@ -10,7 +10,7 @@ EqualizeCommand::EqualizeCommand(std::vector<std::string> params){
 EqualizeCommand::~EqualizeCommand(){}
 
 int EqualizeCommand::doCommand(){
-    std::string command = "./../equlizer/equalizer";
+    std::string command = "./../equalizer/equalizer";
     for(size_t i =0; i< this->params.size(); ++i){
         command += " " + this->params[i];
     }
