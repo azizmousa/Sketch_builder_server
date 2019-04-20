@@ -9,16 +9,18 @@
 #include "server/Server.h"
 #include "server/ExitCommand.h"
 #include "server/CompileCommand.h"
-
+#include "server/EqualizeCommand.h"
 
 const int EXIT = 1;
 const int  START = 2;
 const int COMPILE = 3;
+const int EQUALIZE = 4;
 
 RequestHandler::RequestHandler(){
     this->commands.insert({"exit", EXIT});
     this->commands.insert({"start", START});
     this->commands.insert({"compile", COMPILE});
+    this->commands.insert({"equalize", EQUALIZE});
     
 }
 RequestHandler::~RequestHandler(){
@@ -41,6 +43,9 @@ void RequestHandler::mapRequest(){
         break;
     case COMPILE:
         this->requestedCommand = new CompileCommand(this->params);
+        break;
+    case EQUALIZE:
+        this->requestedCommand = new EqualizeCommand(this->params);
         break;
     
     default:
