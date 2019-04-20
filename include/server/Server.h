@@ -20,7 +20,7 @@ private:
     static int n;
     static bool listening;
 
-    static void handlRequest(std::string request);
+    static int handlRequest(std::string request);
 public:
     
     static void setPort(std::string serverPort);

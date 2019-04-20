@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <iostream>
+#include <sstream>
 
 #include "server/Server.h"
 #include "server/ServerException.h"
@@ -40,10 +41,11 @@ void Server::connect(){
     Server::serv_addr.sin_port = htons(portno);
 
     while (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
-        std::cerr<<("ERROR on binding: Port Is used ...")<<std::endl;
-        sleep(3);
+        std::cerr<<("Searching on empty port ...")<<std::endl;
+        // sleep(3);
+        Server::serv_addr.sin_port = htons(++portno);
     }
-    std::cout << "System is ready:" <<std::endl;    
+    std::cout << "System is ready port "<< portno <<" :" <<std::endl;    
 }
 
 void Server::start(){
@@ -59,9 +61,14 @@ void Server::start(){
 
         if (n < 0) 
             throw ServerException("ERROR reading from socket");
-        handlRequest(std::string(buffer).substr(0, n-1));
-        printf("Here is the message: %s\n",buffer);
-        Server::sendMessageToClient("Command recieved");
+        int response = handlRequest(std::string(buffer).substr(0, n-1));
+        printf("Recieved Command: %s\n",buffer);
+        std::string sres = "200";
+        if(response > 0)
+            sres = "400";
+        else if (response < 0)
+            sres = "404";
+        Server::sendMessageToClient(std::string(sres));
         if (Server::n < 0) 
             throw ServerException("ERROR writing to socket");
         close(Server::newsockfd);
@@ -80,12 +87,16 @@ void Server::sendMessageToClient(std::string message){
     Server::n = write(newsockfd, message.c_str(),18);
 }
 
-void Server::handlRequest(std::string request){
+int Server::handlRequest(std::string request){
     RequestHandler *requestHandler = new RequestHandler();
     requestHandler->setRequest(request);
     Command *command = requestHandler->getCommand();
-    command->doCommand();
+    if(command == NULL)
+        return -1;
+    std::cerr << "command not null"<<std::endl;
+    int res = command->doCommand();
     
     delete command;
     delete requestHandler;
+    return res;
 }
