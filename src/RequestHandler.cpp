@@ -61,6 +61,7 @@ void RequestHandler::mapRequest(){
         this->requestedCommand = NULL;
         break;
     }
+     
 }
 
 void RequestHandler::split(){

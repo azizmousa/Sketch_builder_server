@@ -15,7 +15,6 @@ private:
     static std::string serverPort;
     static int sockfd, newsockfd, portno;
     static socklen_t clilen;
-    static char buffer[256];
     static struct sockaddr_in serv_addr, cli_addr;
     static int n;
     static bool listening;

@@ -16,7 +16,7 @@
 std::string Server::serverPort;
 int Server::sockfd, Server::newsockfd, Server::portno;
 socklen_t Server::clilen;
-char Server::buffer[256];
+// char Server::buffer[256];
 struct sockaddr_in Server::serv_addr, Server::cli_addr;
 int Server::n;
 bool Server::listening = true;
@@ -56,8 +56,10 @@ void Server::start(){
         if (newsockfd < 0) 
             throw ServerException("ERROR on accept");
 
-        // bzero(buffer,256);
-        Server::n = recv(newsockfd,buffer,255, 0);
+        
+        char buffer[256];
+        bzero(buffer,256);
+        Server::n = recv(newsockfd, buffer,255, 0);
 
         if (n < 0) 
             throw ServerException("ERROR reading from socket");
@@ -76,7 +78,8 @@ void Server::start(){
             throw ServerException("ERROR writing to socket");
         close(Server::newsockfd);
     }
-    
+    std::cout << "shutting down ..." << std::endl;
+    sleep(5);
     shutdown(Server::newsockfd, SHUT_RDWR);
     close(Server::sockfd);
     std::cout << "Socket is closed!" << std::endl;
