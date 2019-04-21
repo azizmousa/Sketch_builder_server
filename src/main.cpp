@@ -5,10 +5,10 @@
 #include "server/Server.h"
 #include "server/ServerException.h"
 int main(){
-    SystemConfiguration::setSystemUIPath("../UI/ui.jar");
-    SystemConfiguration::setSystemCompilerPath("../compiler/compiler");
-    SystemConfiguration::setSystemEqualizerPath("../equalizer/equalizer");
-    SystemConfiguration::setSystemCodeGeneratorPath("../UI/ui.jar");
+    SystemConfiguration::setSystemUIPath("bin/ui.jar");
+    SystemConfiguration::setSystemCompilerPath("bin/compiler");
+    SystemConfiguration::setSystemEqualizerPath("bin/equalizer");
+    SystemConfiguration::setSystemCodeGeneratorPath("bin/ui.jar");
 
     try{
         Server::setPort("1996");

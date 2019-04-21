@@ -12,7 +12,7 @@ EqualizeCommand::EqualizeCommand(std::vector<std::string> params){
 EqualizeCommand::~EqualizeCommand(){}
 
 int EqualizeCommand::doCommand(){
-    std::string command = SystemConfiguration::getSystemEqualizerPath() + Files::slash();
+    std::string command = SystemConfiguration::getSystemEqualizerPath();
     for(size_t i =0; i< this->params.size(); ++i){
         command += " " + this->params[i];
         std::cout << "P:(" << this->params[i]<< ")" <<std::endl;

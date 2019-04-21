@@ -14,7 +14,7 @@ CompileCommand::CompileCommand(std::vector<std::string> params){
 CompileCommand::~CompileCommand(){}
 
 int CompileCommand::doCommand(){
-    std::string command = SystemConfiguration::getSystemCompilerPath() + Files::slash();
+    std::string command = SystemConfiguration::getSystemCompilerPath();
     for(size_t i =0; i< this->params.size(); ++i){
         command += " " + this->params[i];
     }

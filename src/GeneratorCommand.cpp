@@ -14,7 +14,7 @@ GeneratorCommand::GeneratorCommand(std::vector<std::string> params){
 GeneratorCommand::~GeneratorCommand(){}
 
 int GeneratorCommand::doCommand(){
-    std::string command = "java -jar " + SystemConfiguration::getSystemCodeGeneratorPath() + Files::slash();
+    std::string command = "java -jar " + SystemConfiguration::getSystemCodeGeneratorPath();
     for(size_t i =0; i< this->params.size(); ++i){
         command += " " + this->params[i];
     }
