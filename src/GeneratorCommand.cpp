@@ -5,7 +5,8 @@
 #include <iostream>
 
 #include "server/GeneratorCommand.h"
-
+#include "server/SystemConfiguration.h"
+#include "server/Files.h"
 
 GeneratorCommand::GeneratorCommand(std::vector<std::string> params){
     this->params = params;
@@ -13,7 +14,7 @@ GeneratorCommand::GeneratorCommand(std::vector<std::string> params){
 GeneratorCommand::~GeneratorCommand(){}
 
 int GeneratorCommand::doCommand(){
-    std::string command = "java -jar ../generator/generator.jar";
+    std::string command = "java -jar " + SystemConfiguration::getSystemCodeGeneratorPath() + Files::slash();
     for(size_t i =0; i< this->params.size(); ++i){
         command += " " + this->params[i];
     }
