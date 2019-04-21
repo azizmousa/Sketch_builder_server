@@ -74,14 +74,14 @@ void RequestHandler::split(){
         while(!ss.eof()){
             ss >> sub;
             this->params.push_back(sub);
-            std::cerr<<"(" << sub <<")"<< std::endl;
+            // std::cerr<<"(" << sub <<")"<< std::endl;
         }
     }
 }
 
 void RequestHandler::setRequest(std::string request){
     this->request = request;
-    std::cerr << "req:: " <<  this->request << std::endl;
+    // std::cerr << "req:: " <<  this->request << std::endl;
     this->split();
     this->mapRequest();
 }

@@ -8,7 +8,7 @@ int main(){
     SystemConfiguration::setSystemUIPath("bin/ui.jar");
     SystemConfiguration::setSystemCompilerPath("bin/compiler");
     SystemConfiguration::setSystemEqualizerPath("bin/equalizer");
-    SystemConfiguration::setSystemCodeGeneratorPath("bin/ui.jar");
+    SystemConfiguration::setSystemCodeGeneratorPath("bin/generator.jar");
 
     try{
         Server::setPort("1996");

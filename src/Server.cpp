@@ -16,7 +16,6 @@
 std::string Server::serverPort;
 int Server::sockfd, Server::newsockfd, Server::portno;
 socklen_t Server::clilen;
-// char Server::buffer[256];
 struct sockaddr_in Server::serv_addr, Server::cli_addr;
 int Server::n;
 bool Server::listening = true;
@@ -42,10 +41,9 @@ void Server::connect(){
 
     while (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
         std::cerr<<("Searching on empty port ...")<<std::endl;
-        // sleep(3);
         Server::serv_addr.sin_port = htons(++portno);
     }
-    std::cout << "System is ready port "<< portno <<" :" <<std::endl;    
+    std::cout << "System is ready on port "<< portno <<" :" <<std::endl;    
 }
 
 void Server::start(){
@@ -99,7 +97,7 @@ int Server::handlRequest(std::string request){
     Command *command = requestHandler->getCommand();
     if(command == NULL)
         return -1;
-    std::cerr << "command not null"<<std::endl;
+    // std::cerr << "command not null"<<std::endl;
     int res = command->doCommand();
     
     delete command;

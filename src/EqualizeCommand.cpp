@@ -15,7 +15,7 @@ int EqualizeCommand::doCommand(){
     std::string command = SystemConfiguration::getSystemEqualizerPath();
     for(size_t i =0; i< this->params.size(); ++i){
         command += " " + this->params[i];
-        std::cout << "P:(" << this->params[i]<< ")" <<std::endl;
+        // std::cout << "P:(" << this->params[i]<< ")" <<std::endl;
     }
     std::cout << command << std::endl;
     // 
