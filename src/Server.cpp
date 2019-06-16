@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 
 #include "server/Server.h"
 #include "server/ServerException.h"
@@ -43,6 +44,11 @@ void Server::connect(){
         std::cerr<<("Searching on empty port ...")<<std::endl;
         Server::serv_addr.sin_port = htons(++portno);
     }
+    
+    std::ofstream portFile(".config/port.config");
+    portFile << portno;
+    portFile.close();
+
     std::cout << "System is ready on port "<< portno <<" :" <<std::endl;    
 }
 

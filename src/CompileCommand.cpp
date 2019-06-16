@@ -18,7 +18,7 @@ int CompileCommand::doCommand(){
     for(size_t i =0; i< this->params.size(); ++i){
         command += " " + this->params[i];
     }
-    std::cout << command << std::endl;
+    std::cout << "compiler command: " << command << std::endl;
     // 
     int systemRes = system(command.c_str());;
     return systemRes;

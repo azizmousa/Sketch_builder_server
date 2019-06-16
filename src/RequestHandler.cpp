@@ -69,9 +69,9 @@ void RequestHandler::split(){
         std::cerr << ("RequestHandler:: has no request to handle") << std::endl;
         this->params.push_back("none");
     }else{
-        std::string sub;
         std::stringstream ss(this->request);
         while(!ss.eof()){
+            std::string sub;
             ss >> sub;
             this->params.push_back(sub);
             // std::cerr<<"(" << sub <<")"<< std::endl;
