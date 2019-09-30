@@ -8,16 +8,16 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
--gcc compiler(build version 8.3.0)
--cmake build tool
--Linux System (ubuntu, debian are tested)
+- gcc compiler(build version 8.3.0)
+- cmake build tool
+- Linux System (ubuntu, debian are tested)
 
 
 ### Installing
 
-1-clone the project to your device and unzip it.
+1- clone the project to your device and unzip it.
 
-2-open the compiler directory suppose it called SERVER_HOME and create directory called build then open it in the terminal.
+2- open the compiler directory suppose it called SERVER_HOME and create directory called build then open it in the terminal.
 
 ```
 $ cd SERVER_HOME
@@ -25,14 +25,14 @@ $ mkdir build
 $ cd build
 ```
 
-3-compile the project and create the executable file
+3- compile the project and create the executable file
 
 ```
 $ cmake ..
 $ make
 ```
 
-4-open the executable file directory
+4- open the executable file directory
 
 ```
 $ cd ..
