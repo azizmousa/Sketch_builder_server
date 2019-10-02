@@ -4,7 +4,7 @@ project (sketch_builder_server)
 
 file(GLOB SRC_ "src/*.cpp")
 
-set(EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin/server")
+set(EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin")
 
 set(CMAKE_CXX_FLAGS "-Wall -O2 -g -pthread")
 
