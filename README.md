@@ -54,4 +54,4 @@ bin/ui.jar
 ```
 
 ## Main Project:
-- [Sketch builder] (https://github.com/zezomousa101/Sketch-Builder)
+- [Sketch builder] (https://github.com/azizmousa/Sketch-Builder)
